@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Declaration of portal data.
  *
