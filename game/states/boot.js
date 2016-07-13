@@ -12,6 +12,10 @@ States.Boot = {
 		this.game.load.image('map', 'assets/images/backgrounds/yourmommasmap.png');
 
 		this.game.load.spritesheet('portal', 'assets/images/misc/portal.png', 123, 123);
+
+		this.game.load.image('background', 'assets/images/reticle/background.png');
+
+		this.game.load.spritesheet('reticle', 'assets/images/reticle/reticle.png', 100, 100);
 	},
 	// Starts the next state.
 	create: function(){
