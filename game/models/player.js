@@ -1,3 +1,5 @@
+"use strict";
+
 // Declaration of player data.
 function Player(game) {
 	this.game = game;
