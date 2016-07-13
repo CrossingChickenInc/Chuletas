@@ -11,7 +11,7 @@ States.Play = {
 		this.game.background = this.game.add.sprite(0, 0, 'map');
 
 		// Sets the world bounds.
-		this.game.world.setBounds(0, 0, 1536, 1536);
+		this.game.world.setBounds(0, 0, 800, 600);
 
 		// Initialiazes the cursor keys.
 		this.game.cursors = game.input.keyboard.createCursorKeys();
@@ -24,15 +24,11 @@ States.Play = {
 		// Sets the camera to follow the player.
 		this.game.camera.follow(this.game.player.colliderSprite);
 
-		//Creates and loads blocks
-		game.obstacle = new Obstacle(window.game, 'play');
-		game.obstacle.load();
-		
 		game.portals = [];
 
-		game.portals.push(new Portal(window.game, 50, 280, 'Play')); //Vale
-		game.portals.push(new Portal(window.game, 230, 180, 'Play')); //Robe
-		game.portals.push(new Portal(window.game, 400, 1000, 'Play')); //Fabio
+		game.portals.push(new Portal(window.game, 50, 280, 'Play'));
+		game.portals.push(new Portal(window.game, 230, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 400, 1000, 'Play'));
 	},
 	// Updates all the game's objects.
 	update: function(){

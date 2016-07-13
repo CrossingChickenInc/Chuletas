@@ -1,4 +1,4 @@
-	var States = {};
+var States = {};
 
 // Loads all the necesasary assets before starting the game.
 States.Boot = {

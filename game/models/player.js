@@ -11,9 +11,8 @@ function Player(game) {
 	this.stopped = true;
 	this.enableBody = true;
 
-this.positionData = {    // Player's position info.
-		//initial: { x: 300, y: 300}, // initial position of the player
-		initial: { x: 50, y: 230}, // initial position of the player
+	this.positionData = {    // Player's position info.
+		initial: { x: 300, y: 300}, // initial position of the player
 		colliderDifference: {x: 4, y: 3}, // distance from collider sprite to sprite
 	};
 }
@@ -22,9 +21,9 @@ this.positionData = {    // Player's position info.
 // Initializes the players sprites.
 Player.prototype.render = function() {
 	// loads sprites
-	this.colliderSprite = this.game.add.sprite(50 - this.positionData.colliderDifference.x, 230 - this.positionData.colliderDifference.y, 'dukeCollider');
-	this.sprite = this.game.add.sprite(30, 230, 'duke');
-	
+	this.colliderSprite = this.game.add.sprite(this.positionData.initial.x - this.positionData.colliderDifference.x, this.positionData.initial.y - this.positionData.colliderDifference.y, 'dukeCollider');
+	this.sprite = this.game.add.sprite(this.positionData.initial.x, this.positionData.initial.y, 'duke');
+
 	// sets sprite properties
 	this.colliderSprite.alpha = 0; // invisible collider sprite
 	this.game.physics.arcade.enable(this.colliderSprite); // enables physics on colliderSprite
@@ -135,9 +134,7 @@ Player.prototype.handleMovement = function() {
 // Updates the player.
 Player.prototype.update = function() {
 	this.checkDeath();
-
 	this.handleMovement();
-	game.physics.arcade.collide(game.obstacle.blocks, this.colliderSprite);
 }
 
 /**
