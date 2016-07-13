@@ -25,10 +25,14 @@ States.Play = {
 		this.game.camera.follow(this.game.player.colliderSprite);
 
 		game.portals = [];
-
-		game.portals.push(new Portal(window.game, 50, 280, 'Play'));
-		game.portals.push(new Portal(window.game, 230, 180, 'Play'));
-		game.portals.push(new Portal(window.game, 400, 1000, 'Play'));
+		game.portals.push(new Portal(window.game, 200, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 300, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 400, 180, 'Play'));
+		
+		var style = { font: "14px", fill: "#ffffff" };
+		game.add.text(200, 200, "RETICLE", style);
+		game.add.text(305, 200, "BOMBS", style);
+		game.add.text(410, 200, "KEYS", style);
 	},
 	// Updates all the game's objects.
 	update: function(){
