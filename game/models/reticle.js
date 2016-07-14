@@ -110,10 +110,9 @@ Reticle.prototype.checkOverlap = function (spriteA, spriteB) {
     var boundsB = spriteB.getBounds();
 
     return Phaser.Rectangle.intersects(boundsA, boundsB);
-
 }
 
-Reticle.prototype.update = function(){
+Reticle.prototype.update = function() {
 	this.isOnTarget();
 	this.move();
 
