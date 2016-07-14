@@ -16,6 +16,10 @@ States.Boot = {
 		this.game.load.image('background', 'assets/images/reticle/background.png');
 
 		this.game.load.spritesheet('reticle', 'assets/images/reticle/reticle.png', 100, 100);
+
+		this.game.load.image('target', 'assets/images/reticle/target.png');
+		
+		this.game.load.image('reticleCollider', 'assets/images/reticle/reticleCollider.png');
 	},
 	// Starts the next state.
 	create: function(){
