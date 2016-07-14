@@ -12,5 +12,8 @@ window.game = game = new Phaser.Game(800, 600, Phaser.AUTO, '');
 game.state.add('Boot', Game.States.Boot);
 game.state.add('Play', Game.States.Play);
 
+// Minigames State
+game.state.add('KeyStage', Game.States.KeyStage);
+
 // Starts the initial state.
 game.state.start('Boot');
