@@ -8,6 +8,7 @@ States.Boot = {
 		this.game.load.image('blockH', 'assets/images/backgrounds/blockH.png');
 		this.game.load.image('block', 'assets/images/backgrounds/block.png');
 		this.game.load.spritesheet('duke', 'assets/images/characters/duke.png', 23, 43);
+		this.game.load.image('bomb', 'assets/images/bombs/bomb.png');
 		
 		this.game.load.image('map', 'assets/images/backgrounds/yourmommasmap.png');
 
