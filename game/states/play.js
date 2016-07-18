@@ -26,7 +26,7 @@ States.Play = {
 
 		game.portals = [];
 		game.portals.push(new Portal(window.game, 200, 180, 'Play'));
-		game.portals.push(new Portal(window.game, 300, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 300, 180, 'MathBombs'));
 		game.portals.push(new Portal(window.game, 400, 180, 'Play'));
 		
 		var style = { font: "14px", fill: "#ffffff" };
