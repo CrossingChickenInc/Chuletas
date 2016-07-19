@@ -1,10 +1,11 @@
+//Function createBombs with random position and velocity
 function createBombs() {
 	var bombs;
 	//Group for bombs
 	bombs = this.game.add.group();
 	bombs.enableBody = true;
 	//Creation of bombs
-	for (var i = 0; i < 4; i++) {
+	//for (var i = 0; i < 4; i++) {
 
 		//Random var for creation of bombs (not all in the same position)
 		var random = this.game.rnd.realInRange(50, 500);
@@ -22,7 +23,7 @@ function createBombs() {
         //Another random var for velocity this could be used for levels 
         var randomVelocity = this.game.rnd.realInRange(110,60);
         bomb.body.velocity.x = randomVelocity;
-	};
+	//};
 }
 
 // Math Bombs minigame state
@@ -36,7 +37,7 @@ function createBombs() {
  	create: function(){
  		//this.game.stage.backgroundColor = 'rgb(204, 255, 204)';
  		this.game.stage.backgroundColor = 'rgb(255, 255, 255)';
- 		this.game.time.events.loop(Phaser.Timer.SECOND, createBombs, this);
+ 		this.game.time.events.loop(Phaser.Timer.QUARTER, createBombs, this);
  	
  	},
  	// Updates all the game's objects.
