@@ -20,10 +20,10 @@ function MathBar(game, x, y, width, height, graphics, color) {
 }
 
 MathBar.prototype.render = function() {
+	this.sprite = this.game.add.sprite(this.x, this.y, 'basicFortress');
 	this.graphics.beginFill(this.color);
     this.graphics.drawRect(this.x, this.y, this.width, this.height);
 	this.graphics.endFill();
-	this.sprite = this.game.add.sprite(this.x, this.y, 'basicFortress');
 
 	this.sprite.immovable = true; // makes it immovable when a collision occurs
 	
@@ -47,4 +47,14 @@ MathBar.prototype.load = function() {
 
 MathBar.prototype.changeNumber = function(min, max){
 	this.number = Math.floor(Math.random() * (max - min + 1)) + min; 
+};
+
+MathBar.prototype.killBar = function(){
+	this.graphics.beginFill(0xAFB0B2);
+	this.graphics.drawRect(this.x, this.y, this.width, this.height);
+	this.graphics.endFill(); 	
+		
+	for (var i = 0; i< 2; i++){
+		this.text[i].setText("0");
+	}
 };
