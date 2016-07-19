@@ -20,7 +20,7 @@ function MathBar(game, x, y, width, height, graphics, color) {
 }
 
 MathBar.prototype.render = function() {
-	this.sprite = this.game.add.sprite(this.x, this.y, 'basicFortress');
+	this.sprite = this.game.add.sprite(this.x, this.y, 'bar');
 	this.graphics.beginFill(this.color);
     this.graphics.drawRect(this.x, this.y, this.width, this.height);
 	this.graphics.endFill();
