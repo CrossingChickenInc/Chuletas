@@ -15,6 +15,8 @@ ReticleState.prototype.init = function() {
  * Initializes the stage objects.
  */
 ReticleState.prototype.create = function() {
+	var timerText;
+	timerText = this.game.add.text(50, 50, 'Timer: 0',{ fontSize: '32px', fill: '#CCCCCC' });
 	// Sets the world bounds.
 	this.game.background = this.game.add.sprite(0, 0, 'background');
 
@@ -38,7 +40,7 @@ ReticleState.prototype.create = function() {
  */
 ReticleState.prototype.update = function(){
 	// Updates the player.
-	game.reticle.update(game.player);
+	game.reticle.update();
 	
 }
 
