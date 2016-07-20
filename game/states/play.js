@@ -25,9 +25,9 @@ States.Play = {
 		this.game.camera.follow(this.game.player.colliderSprite);
 
 		game.portals = [];
-		game.portals.push(new Portal(window.game, 200, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 200, 180, 'Boot'));
 		game.portals.push(new Portal(window.game, 300, 180, 'Play'));
-		game.portals.push(new Portal(window.game, 400, 180, 'KeyStage'));
+		game.portals.push(new Portal(window.game, 400, 180, 'ComboCodes'));
 		
 		var style = { font: "14px", fill: "#ffffff" };
 		game.add.text(200, 200, "RETICLE", style);
