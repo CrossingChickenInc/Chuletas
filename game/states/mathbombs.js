@@ -1,6 +1,8 @@
 //Function createBombs with random position and velocity
 function createBombs() {
 	var bombs;
+	var text;
+
 	//Group for bombs
 	bombs = this.game.add.group();
 	bombs.enableBody = true;
@@ -10,20 +12,36 @@ function createBombs() {
 		//Random var for creation of bombs (not all in the same position)
 		var random = this.game.rnd.realInRange(50, 500);
 		var bomb = bombs.create(0, random, 'bomb');
-		//var bomb = this.game.create(0, random, 'bomb');
 			
 		//Little modification to bombs size
-		bomb.width = 30;
+		bomb.width = 50;
 		bomb.height = 150;
 
-		//  Gravity on x axis
+		//Gravity on x axis
         bomb.body.gravity.x = 300;
         bomb.body.collideWorldBounds = true;
 
+        //Var style for text
+        var style = {boundsAlignH : "center", boundsAlignV:"middle", align: "center" };
+
+        //Numbers under each bomb
+        var positionTextX = Math.round(bomb.width * 0.5 );
+        var positionTextY = Math.round(bomb.height * 0.5 );
+        text = this.game.add.text(positionTextX, positionTextY,createRandomNumbers(1,10), style);
+       	//text.anchor.x = Math.round(text.width * 0.5) / text.width;
+       	text.anchor.setTo = 0.5;
+        bomb.addChild(text);
+
         //Another random var for velocity this could be used for levels 
-        var randomVelocity = this.game.rnd.realInRange(110,60);
+        var randomVelocity = this.game.rnd.realInRange(2,0);
         bomb.body.velocity.x = randomVelocity;
 	//};
+}
+//Create random Numbers
+function createRandomNumbers(min, max){
+	var randomNumber = this.game.rnd.realInRange(min,max);
+	var numberRounded = Math.round(randomNumber);
+	return numberRounded;
 }
 
 // Math Bombs minigame state
@@ -37,7 +55,8 @@ States.MathBombs = {
 	create: function(){
 		this.game.nBars = 4;
  		this.game.stage.backgroundColor = 'rgb(255, 255, 255)';
- 		this.game.time.events.loop(Phaser.Timer.QUARTER, createBombs, this);
+ 		this.game.time.events.loop(Phaser.Timer.SECOND, createBombs, this);
+ 		//this.game.time.events.loop(2000, createBombs, this);
 
 		var graphics = this.game.add.graphics(0, 0);
 		var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
