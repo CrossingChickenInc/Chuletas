@@ -18,9 +18,9 @@ ComboCodes.prototype.create = function() {
 	this.game.world.setBounds(0, 0, 800, 600);
 
 	// Creates and loads a Key object.
+	
 	this.game.Key = new Key(window.game);
 	this.game.Key.render();
-	//this.game.Key.setBodySprite(50,50);
 
 }	
 
@@ -34,3 +34,4 @@ ComboCodes.prototype.update = function(){
 
 // Adds this stage to the game's states.
 States.ComboCodes = new ComboCodes();
+
