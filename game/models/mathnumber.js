@@ -1,6 +1,6 @@
 "use strict";
 
-function MathNumber(game, x, y) {
+function MathNumber(game, x, y, mathBars) {
 	this.game = game;
 	this.x = x;
 	this.y = y;
@@ -13,12 +13,14 @@ function MathNumber(game, x, y) {
 					Phaser.Keyboard.NUMPAD_2, Phaser.Keyboard.NUMPAD_3,
 					Phaser.Keyboard.NUMPAD_4, Phaser.Keyboard.NUMPAD_5,
 					Phaser.Keyboard.NUMPAD_6, Phaser.Keyboard.NUMPAD_7,
-					Phaser.Keyboard.NUMPAD_8, Phaser.Keyboard.NUMPAD_9]
+					Phaser.Keyboard.NUMPAD_8, Phaser.Keyboard.NUMPAD_9];
 	this.numbers = [Phaser.Keyboard.ZERO, Phaser.Keyboard.ONE,
 					Phaser.Keyboard.TWO, Phaser.Keyboard.THREE,
 					Phaser.Keyboard.FOUR, Phaser.Keyboard.FIVE,
 					Phaser.Keyboard.SIX, Phaser.Keyboard.SEVEN,
-					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE]
+					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE];
+	this.mathBars = mathBars;
+
 }
 
 MathNumber.prototype.renderText = function() {
@@ -46,11 +48,46 @@ MathNumber.prototype.update = function(){
 };
 
 MathNumber.prototype.handleInput = function(){
-	for (var i=0; i<10; i++){
-		if (game.input.keyboard.isDown(this.numpad[i]) || game.input.keyboard.isDown(this.numbers[i])){
-		this.changeNumber(i);
-		} else {
-			this.pressed[i] = false;
+	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
+		this.submitNumber();
+	} else if (game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE) || game.input.keyboard.isDown(Phaser.Keyboard.DELETE)) {
+		this.resetNumber();
+	} else {
+		for (var i=0; i<10; i++){
+			if (game.input.keyboard.isDown(this.numpad[i]) || game.input.keyboard.isDown(this.numbers[i])){
+				this.changeNumber(i);
+			} else {
+				this.pressed[i] = false;
+		}
+	}
+	}
+	
+};
+
+MathNumber.prototype.submitNumber = function(){
+	for (var i=0; i<this.mathBars.length; i++){
+		this.mathBars[i].dropNumber(this.number);
+	}
+	this.resetNumber();
+	this.checkBars();
+};
+
+MathNumber.prototype.resetNumber = function(){
+	this.number = 0;
+	this.text.setText(this.number.toString());
+	this.text.x = this.x - this.text.width;
+};
+
+MathNumber.prototype.checkBars = function(){
+	var allKilled = true;
+	for (var i=0; i<this.mathBars.length; i++){
+		if (!this.mathBars[i].killed){
+			allKilled = false;
+		}
+	}
+	if (allKilled){
+		for (var i=0; i<this.mathBars.length; i++){
+			this.mathBars[i].updateNumber();
 		}
 	}
 };

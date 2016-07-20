@@ -54,9 +54,8 @@ States.MathBombs = {
 	// Starts the game.
 	create: function(){
 		this.game.nBars = 4;
- 		this.game.stage.backgroundColor = 'rgb(255, 255, 255)';
+ 		this.game.stage.backgroundColor = '0xFFFFFF';
  		this.game.time.events.loop(Phaser.Timer.SECOND, createBombs, this);
- 		//this.game.time.events.loop(2000, createBombs, this);
 
 		var graphics = this.game.add.graphics(0, 0);
 		var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
@@ -69,7 +68,7 @@ States.MathBombs = {
 			this.mathBars[i].load();
 		}
 
-		this.mathNumber = new MathNumber(this.game, 100, 100);
+		this.mathNumber = new MathNumber(this.game, 50, this.game.height, this.mathBars);
 		this.mathNumber.load();
 		
 	},
