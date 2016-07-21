@@ -1,5 +1,4 @@
 function ComboCodes() {}
-//#yolo
 /**
  * Sets the state's basic configurations.
  */
@@ -7,7 +6,8 @@ ComboCodes.prototype.init = function() {
 	this.game.renderer.renderSession.roundPixels = true;
 	this.physics.startSystem(Phaser.Physics.ARCADE);
 };
-
+var coordinated = false;
+var keyCreated = true;
 /**
  * Initializes the stage objects.
  */
@@ -17,11 +17,12 @@ ComboCodes.prototype.create = function() {
 	// Sets the world bounds.
 	this.game.world.setBounds(0, 0, 800, 600);
 
-	// Creates and loads a Key object.
-	
+	// Creates and loads a Key object.	
 	this.game.Key = new Key(window.game);
 	this.game.Key.render();
 
+	//Creates and loads Clock object
+	game.clock = new Clock(window.game);
 }	
 
 /**
@@ -29,7 +30,33 @@ ComboCodes.prototype.create = function() {
  */
 ComboCodes.prototype.update = function(){
 
-	this.game.Key.update();
+	//this.game.Key.update();
+	//creates a timer for when a single key is pressed
+	if(//key pressed
+	){
+		game.clock.load();
+	}
+	if(game.clock.total == 3) {
+		this.game.Key.kill();
+		keyCreated = true;
+		game.clock.kill();
+	}
+	//creates a timer of half the time for when all keys are pressed at the same time
+	if (//key1 & key2 & key3 pressed
+		) {
+		game.clock.load();
+		coordinated = true;
+	}
+	if (coordinated & game.clock.total == 1.5) {
+		this.game.Key.kill();
+		keyCreated = true;
+		game.clock.kill();
+	}
+	//updates a new key
+	if(keyCreated) {
+		this.game.Key.update();
+		keyCreated = false;
+	}
 }
 
 // Adds this stage to the game's states.
