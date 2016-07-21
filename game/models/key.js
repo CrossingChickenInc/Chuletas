@@ -34,7 +34,7 @@ Key.prototype.render = function(){
 	//adding the random letter
 	this.game.add.text(this.x + 45, this.y + 15, this.pmap[this.keyNumber], { font: "50px Courier", fill: "#000", tabs: 32 });
 
-	//createEventListeners();
+	this.createEventListeners();
 };
 
 
@@ -44,8 +44,8 @@ Key.prototype.update = function(){
 }
 	
 	
-
-function createEventListeners() {
+// Implement KeyBoard Events
+Key.prototype.createEventListeners = function() {
 
     keys = game.input.keyboard.addKeys(
         {
@@ -81,30 +81,27 @@ function createEventListeners() {
 
     for (var i = 0; i < 26; i++)
     {
-        keys['key' + i].onDown.add(keyDown, this, 0, i);
+        keys['key' + i].onDown.add(keyDown,this, 0,i);
     }
 }
 
 //
-function keyDown(i,p) {
+function keyDown(n,p) {
 
-    if (typeof p !== 'undefined')
+    /*if (typeof p !== 'undefined')
     {
-        //  It came from a Keyboard Event, in which case the color index is in p, not i.
-        i = p;
-    }
+        //  It came from a Keyboard Event, in which case index is in p, not i.
+        n = p;
+    }*/
 
-    if (i < 0)
+    if (p == this.keyNumber)
     {
-        i = 25;
-    }
-    else if (i >= 26)
-    {
-        i = 0;
-    }
-
-    this.game.add.text(10, 10, "INPUT VERIFICATION", { font: "50px Courier", fill: "#FFD700", tabs: 32 });
-
+    	this.game.add.text(10, 10, "INPUT VERIFICATION" + " === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
+	}
+	else 
+	{
+		this.game.add.text(10, 500, "INPUT ERROR: " + p + " === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
+	}
 }
 
 
