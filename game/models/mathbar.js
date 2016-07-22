@@ -96,30 +96,30 @@ MathBar.prototype.killBar = function(){
 	this.killed = true;
 };
 
-MathBar.prototype.testNumber = function(number){
+MathBar.prototype.testNumber = function(number/*,bombGroup*/){
 	// Function to catch all the overlaping bombs here
+	//this.game.physics.arcade.overlap(this, bombGroup, testArithmetic, null, this);
 
 	if (!this.killed && this.number == number){
 		this.killBar();
 	}
 };
 
-MathBar.prototype.testArithmetic = function(bomb, number){
-	/*
-		var calculedNumber;
-		var option = 0;
-		switch (option){
-			case 0:
-				calculedNumber = bomb.number + this.number;
-			break;
-			case 1:
-				calculedNumber = bomb.number * this.number;
-			break;
-		}
-		if (calculedNumber == number){
-			this.killBar();
-		}
-	*/
+MathBar.prototype.testArithmetic = function(bar, bomb){
+	var calculedNumber;
+	var option = 0;
+	switch (option){
+		case 0:
+			calculedNumber = bomb.number + bar.number;
+		break;
+		case 1:
+			calculedNumber = bomb.number * bar.number;
+		break;
+	}
+	if (calculedNumber == number){
+		bomb.kill();
+		bar.killBar();
+	}
 };
 
 MathBar.prototype.updateNumber = function(number){
