@@ -17,7 +17,7 @@ States.Boot = {
 
 		this.game.load.spritesheet('reticle', 'assets/images/reticle/Reticles.png', 85, 81);
 
-		this.game.load.image('target', 'assets/images/reticle/target.png');
+		this.game.load.image('target', 'assets/images/reticle/gameTarget.png');
 		
 		this.game.load.image('reticleCollider', 'assets/images/reticle/reticleCollider.png');
 	},

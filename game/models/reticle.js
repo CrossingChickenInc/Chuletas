@@ -14,6 +14,8 @@ function Reticle(game) {
 	this.multiplier = 1;
 	this.score = 0;
 	this.currentTimer = 0;
+	this.isOnNewPosition = true;
+	this.timeTargetStartedMoving = 0;
 
 
 	this.targetPosition = {    // Target position
@@ -26,20 +28,34 @@ function Reticle(game) {
 		y: 100 
 	};
 
-	this.colliderDifference = {
+	this.reticleColliderDifference = {
 		x:39,
 		y:34
 	};
 
-	
+	this.targetColliderDifference = {
+		x:43,
+		y:43
+	};
+
+	this.newTargetPosition = {
+		x:0,
+		y:0
+	};
+
+	this.targetSpeed = {
+		x:0,
+		y:0
+	};	
 }
 
 Reticle.prototype.render = function() {
 	// loads sprites
-	this.targetSprite = this.game.add.sprite(this.targetPosition.x , this.targetPosition.y, 'target');
-	this.reticleSprite = this.game.add.sprite(this.reticlePosition.x, this.reticlePosition.y, 'reticle');
-	this.reticleCollider = this.game.add.sprite(this.reticlePosition.x + this.colliderDifference.x, this.reticlePosition.y + this.colliderDifference.y, 'reticleCollider');
-	this.targetCollider = this.game.add.sprite(this.targetPosition.x + this.colliderDifference.x, this.targetPosition.y + this.colliderDifference.y, 'reticleCollider');
+	this.targetSprite = this.game.add.sprite(this.targetPosition.x - this.targetColliderDifference.x, this.targetPosition.y - this.targetColliderDifference.x, 'target');
+	this.reticleSprite = this.game.add.sprite(this.reticlePosition.x - this. reticleColliderDifference.x, this.reticlePosition.y - this.reticleColliderDifference.y, 'reticle');
+	
+	this.reticleCollider = this.game.add.sprite(this.reticlePosition.x, this.reticlePosition.y, 'reticleCollider');
+	this.targetCollider = this.game.add.sprite(this.targetPosition.x, this.targetPosition.y, 'reticleCollider');
 	// sets sprite properties
 	this.game.physics.arcade.enable(this.targetSprite); 
 	this.game.physics.arcade.enable(this.reticleSprite);
@@ -52,9 +68,9 @@ Reticle.prototype.render = function() {
 	this.targetSprite.immovable = true; 
 	this.reticleSprite.body.collideWorldBounds = true; 
 
-	this.game.physics.enable(this.targetSprite, Phaser.Physics.ARCADE);
+	this.game.physics.enable(this.targetCollider, Phaser.Physics.ARCADE);
 
-	this.game.physics.enable(this.reticleSprite, Phaser.Physics.ARCADE);
+	this.game.physics.enable(this.reticleCollider, Phaser.Physics.ARCADE);
 
 	//Adding the timer
 	this.timer = game.time.create(false);
@@ -136,7 +152,7 @@ Reticle.prototype.move = function() {
 	this.reticleCollider.x = game.input.mousePointer.x;
 	this.reticleCollider.y = game.input.mousePointer.y;
 
-    this.setReticlePosition(this.reticleCollider.x - this.colliderDifference.x, this.reticleCollider.y - this.colliderDifference.y);
+    this.setReticlePosition(this.reticleCollider.x - this.reticleColliderDifference.x, this.reticleCollider.y - this.reticleColliderDifference.y);
 }
 
 Reticle.prototype.setReticlePosition = function(x, y) {
@@ -144,13 +160,36 @@ Reticle.prototype.setReticlePosition = function(x, y) {
 	this.reticleSprite.y = y;
 }
 
-Reticle.prototype.setTargetPosition = function(x, y) {
-	this.targetCollider.x = x;
-	this.targetCollider.y = y;
-
-	this.targetSprite.x = x - this.colliderDifference.x;
-	this.targetSprite.y = y - this.colliderDifference.y;
+Reticle.prototype.setNewTargetPosition = function(x, y) {
+	this.newTargetPosition.x = x;
+	this.newTargetPosition.y = y;
+	this.isOnNewPosition = false;
+	this.timeTargetStartedMoving = this.timer.seconds;
 }
+
+Reticle.prototype.moveTargetToPosition = function() {
+	/*
+	calcular distancia entre los centros
+	dividir la distancia entre (5,4,3) segundos y asignar ese valor a la velocidad
+	done.
+	*/
+	this.calculateTargetSpeed(5);
+	this.targetCollider.body.velocity.x = this.targetSpeed.x;
+	this.targetCollider.body.velocity.y = this.targetSpeed.y;
+
+	this.targetSprite.x = this.targetCollider.x - this.targetColliderDifference.x;
+	this.targetSprite.y = this.targetCollider.y - this.targetColliderDifference.y;
+}
+
+Reticle.prototype.stopTarget = function() {
+	this.targetCollider.body.velocity.x = 0;
+	this.targetCollider.body.velocity.y = 0;
+}
+
+Reticle.prototype.calculateTargetSpeed = function(difficulty) {
+	this.targetSpeed.x = -((this.targetPosition.x - this.newTargetPosition.x)/5) /*difficulty*/;
+	this.targetSpeed.y = -((this.targetPosition.y - this.newTargetPosition.y)/5) /*difficulty*/;
+};
 
 Reticle.prototype.checkOverlap = function (spriteA, spriteB){
 
@@ -160,12 +199,15 @@ Reticle.prototype.checkOverlap = function (spriteA, spriteB){
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
 
-//Reticle.prototype.moveTargetPosition = function(x, y) {
-//	this.reticleSprite.x = x;
-//	this.reticleSprite.y = y;
-//}
-
-
+Reticle.prototype.checkIfTargetIsInNewPosition = function() {
+	
+	if(Math.abs(this.targetCollider.x - this.newTargetPosition.x) < 10 && Math.abs(this.targetCollider.y - this.newTargetPosition.y) < 10)
+	{
+		this.isOnNewPosition = true;
+		this.targetPosition.x = this.targetCollider.x;
+		this.targetPosition.y = this.targetCollider.y;
+	}
+}
 
 Reticle.prototype.handleTimer = function (timeStart) {
 	if(this.timer==null) {
@@ -188,11 +230,22 @@ Reticle.prototype.update = function() {
 	if(this.checkTimerVar() && this.onTarget) {
 		this.scorePoints();
 	}
-	if(this.score > 10) {
+	if(this.score > 2) {
 
-		this.setTargetPosition(this.game.rnd.integerInRange(44, 756), this.game.rnd.integerInRange(44, 556));
+		this.setNewTargetPosition(this.game.rnd.integerInRange(44, 700), this.game.rnd.integerInRange(44, 500));
+
 		this.score = 0;
 	}
+	console.log(this.newTargetPosition.x);
+	console.log(this.newTargetPosition.y);
+	this.checkIfTargetIsInNewPosition();
+	if(!this.isOnNewPosition){
+		this.moveTargetToPosition();
+	}
+	else {
+		this.stopTarget();	
+	}
+
 	console.log(this.score);
 
 }
