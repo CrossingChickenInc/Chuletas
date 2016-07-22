@@ -1,49 +1,3 @@
-//Function createBombs with random position and velocity
-function createBombs() {
-	var bombs;
-	var text;
-
-	//Group for bombs
-	bombs = this.game.add.group();
-	bombs.enableBody = true;
-	//Creation of bombs
-	//for (var i = 0; i < 4; i++) {
-
-		//Random var for creation of bombs (not all in the same position)
-		var random = this.game.rnd.realInRange(50, 500);
-		var bomb = bombs.create(0, random, 'bomb');
-			
-		//Little modification to bombs size
-		bomb.width = 50;
-		bomb.height = 150;
-
-		//Gravity on x axis
-        bomb.body.gravity.x = 300;
-        bomb.body.collideWorldBounds = true;
-
-        //Var style for text
-        var style = {boundsAlignH : "center", boundsAlignV:"middle", align: "center" };
-
-        //Numbers under each bomb
-        var positionTextX = Math.round(bomb.width * 0.5 );
-        var positionTextY = Math.round(bomb.height * 0.5 );
-        text = this.game.add.text(positionTextX, positionTextY,createRandomNumbers(1,10), style);
-       	//text.anchor.x = Math.round(text.width * 0.5) / text.width;
-       	text.anchor.setTo = 0.5;
-        bomb.addChild(text);
-
-        //Another random var for velocity this could be used for levels 
-        var randomVelocity = this.game.rnd.realInRange(2,0);
-        bomb.body.velocity.x = randomVelocity;
-	//};
-}
-//Create random Numbers
-function createRandomNumbers(min, max){
-	var randomNumber = this.game.rnd.realInRange(min,max);
-	var numberRounded = Math.round(randomNumber);
-	return numberRounded;
-}
-
 // Math Bombs minigame state
 States.MathBombs = {
 	// Sets the game's basic configurations.
@@ -55,7 +9,6 @@ States.MathBombs = {
 	create: function(){
 		this.game.nBars = 4;
  		this.game.stage.backgroundColor = '0xFFFFFF';
- 		this.game.time.events.loop(Phaser.Timer.SECOND, createBombs, this);
 
 		var graphics = this.game.add.graphics(0, 0);
 		var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
@@ -71,11 +24,16 @@ States.MathBombs = {
 
 		this.mathNumber = new MathNumber(this.game, 50, this.game.height, this.mathBars);
 		this.mathNumber.load();
+
+		this.bombs = new Bomb(this.game);
+ 		this.bombs.load();
+ 		//this.game.time.events.repeat(Phaser.Timer.SECOND * 2, 10, this.bombs.createBombs(), this);
+ 		//this.game.time.events.loop(Phaser.Timer.SECOND, this.bombs.createBombs(), this);
+
 		
 	},
 	// Updates all the game's objects.
 	update: function(){
 		this.mathNumber.update();
 	}
-
 }
