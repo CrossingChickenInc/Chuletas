@@ -20,6 +20,8 @@ function MathNumber(game, x, y, mathBars) {
 					Phaser.Keyboard.SIX, Phaser.Keyboard.SEVEN,
 					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE];
 	this.mathBars = mathBars;
+	this.timer = this.game.time.create(false);
+	this.timer.loop(1000, this.resetNumber, this);
 
 }
 
@@ -35,6 +37,7 @@ MathNumber.prototype.load = function() {
 }
 
 MathNumber.prototype.changeNumber = function(number){
+	this.timer.stop(false);
 	if (!this.pressed[number]){
 		this.number = (this.number * 10 + number)%1000;
 		this.text.setText(this.number.toString());
@@ -58,8 +61,9 @@ MathNumber.prototype.handleInput = function(){
 				this.changeNumber(i);
 			} else {
 				this.pressed[i] = false;
+				this.timer.start();
+			}
 		}
-	}
 	}
 	
 };
