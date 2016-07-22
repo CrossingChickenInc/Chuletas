@@ -1,9 +1,14 @@
 "use strict";
 
 function MathBar(game, x, y, width, height, graphics, color) {
+	Phaser.Sprite.call(this, game, x, y, 'bar');
+
 	this.game = game;
+    this.game.add.existing(this);
+
+    this.immovable = true;
+	this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	
-	this.sprite = null;
 	this.x = x;
 	this.y = y;
 	this.width = width;
@@ -19,17 +24,17 @@ function MathBar(game, x, y, width, height, graphics, color) {
 	this.color = color;
 
 	this.killed = false;
+
+
 }
 
+MathBar.prototype = Object.create(Phaser.Sprite.prototype);
+MathBar.prototype.constructor = MathBar;
+
 MathBar.prototype.render = function() {
-	this.sprite = this.game.add.sprite(this.x, this.y, 'bar');
 	this.graphics.beginFill(this.color);
     this.graphics.drawRect(this.x, this.y, this.width, this.height);
 	this.graphics.endFill();
-
-	this.sprite.immovable = true; // makes it immovable when a collision occurs
-	
-	this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);	
 };
 
 MathBar.prototype.renderText = function() {
@@ -62,10 +67,30 @@ MathBar.prototype.killBar = function(){
 	this.killed = true;
 };
 
-MathBar.prototype.dropNumber = function(number){
+MathBar.prototype.testNumber = function(number){
+	// Function to catch all the overlaping bombs here
+
 	if (!this.killed && this.number == number){
 		this.killBar();
 	}
+};
+
+MathBar.prototype.testArithmetic = function(bomb, number){
+	/*
+		var calculedNumber;
+		var option = 0;
+		switch (option){
+			case 0:
+				calculedNumber = bomb.number + this.number;
+			break;
+			case 1:
+				calculedNumber = bomb.number * this.number;
+			break;
+		}
+		if (calculedNumber == number){
+			this.killBar();
+		}
+	*/
 };
 
 MathBar.prototype.updateNumber = function(number){
@@ -80,3 +105,4 @@ MathBar.prototype.updateNumber = function(number){
 		this.text[i].y = this.textY[i] - this.text[i].height / 2; 
 	}
 };
+

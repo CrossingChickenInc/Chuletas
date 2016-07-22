@@ -65,9 +65,7 @@ MathNumber.prototype.handleInput = function(){
 };
 
 MathNumber.prototype.submitNumber = function(){
-	for (var i=0; i<this.mathBars.length; i++){
-		this.mathBars[i].dropNumber(this.number);
-	}
+	this.mathBars.callAll('testNumber', null, this.number);
 	this.resetNumber();
 	this.checkBars();
 };
@@ -79,15 +77,7 @@ MathNumber.prototype.resetNumber = function(){
 };
 
 MathNumber.prototype.checkBars = function(){
-	var allKilled = true;
-	for (var i=0; i<this.mathBars.length; i++){
-		if (!this.mathBars[i].killed){
-			allKilled = false;
-		}
-	}
-	if (allKilled){
-		for (var i=0; i<this.mathBars.length; i++){
-			this.mathBars[i].updateNumber();
-		}
+	if (this.mathBars.checkAll('killed', true)){
+		this.mathBars.callAll('updateNumber');
 	}
 };
