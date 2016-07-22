@@ -1,5 +1,5 @@
 //Declaration of variables
-function Clock(game){
+function clock(game){
 	this.game = game;
 	this.timer = null;
 	this.total = 0;
