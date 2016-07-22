@@ -49,7 +49,7 @@ MathNumber.prototype.update = function(){
 
 MathNumber.prototype.handleInput = function(){
 	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-		this.submitNumber();
+		this.testNumber();
 	} else if (game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE) || game.input.keyboard.isDown(Phaser.Keyboard.DELETE)) {
 		this.resetNumber();
 	} else {
@@ -64,10 +64,9 @@ MathNumber.prototype.handleInput = function(){
 	
 };
 
-MathNumber.prototype.submitNumber = function(){
-	this.mathBars.callAll('testNumber', null, this.number);
+MathNumber.prototype.testNumber = function(){
+	this.mathBars.testNumber(this.number);
 	this.resetNumber();
-	this.checkBars();
 };
 
 MathNumber.prototype.resetNumber = function(){
@@ -76,8 +75,3 @@ MathNumber.prototype.resetNumber = function(){
 	this.text.x = this.x - this.text.width;
 };
 
-MathNumber.prototype.checkBars = function(){
-	if (this.mathBars.checkAll('killed', true)){
-		this.mathBars.callAll('updateNumber');
-	}
-};

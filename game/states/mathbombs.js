@@ -10,17 +10,15 @@ States.MathBombs = {
 		this.game.nBars = 4;
  		this.game.stage.backgroundColor = '0xFFFFFF';
 
-		var graphics = this.game.add.graphics(0, 0);
-		var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
-
-		this.mathBars = game.add.group();
-		var width = this.game.width / (2 * this.game.nBars);
+		this.mathBars = new MathBars(this.game);
+		this.mathBars.createBars();
+	
 		
-		for (var i=0; i < this.game.nBars; i++){
-			var mathbar = new MathBar(this.game, this.game.width/2 + i*width, 0, width, this.game.height, graphics, colors[i]);
+		/*for (var i=0; i < this.game.nBars; i++){
+			var mathbar = new MathBar(this.game, this.game.width/2 + i*width, 0, graphics, colors[i]);
 			mathbar.load();
 			this.mathBars.add(mathbar);
-		}
+		}*/
 
 		this.mathNumber = new MathNumber(this.game, 50, this.game.height, this.mathBars);
 		this.mathNumber.load();

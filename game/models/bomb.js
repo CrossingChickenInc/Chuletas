@@ -5,6 +5,7 @@ function Bomb(game) {
 	this.timer = null;
 	this.total = 0;
 }
+
 Bomb.prototype.createRandomNumbers = function(min, max){
 	var randomNumber = this.game.rnd.realInRange(min,max);
 	var numberRounded = Math.round(randomNumber);

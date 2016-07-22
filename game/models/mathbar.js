@@ -1,6 +1,42 @@
 "use strict";
 
-function MathBar(game, x, y, width, height, graphics, color) {
+function MathBars(game) {
+	Phaser.Group.call(this, game);
+
+	this.game = game;
+}
+
+MathBars.prototype = Object.create(Phaser.Group.prototype);
+MathBars.prototype.constructor = MathBars;
+
+MathBars.prototype.createBars = function(){
+	var graphics = this.game.add.graphics(0, 0);
+	var width = this.game.width / (2 * this.game.nBars);
+	var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
+
+	for (var i=0; i < this.game.nBars; i++){
+		var mathbar = new MathBar(this.game, this.game.width/2 + i*width, 0, graphics, colors[i]);
+		mathbar.load();
+		this.add(mathbar);
+	}
+
+	this.game.world.moveUp(this);
+};
+
+MathBars.prototype.testNumber = function(number){
+	this.callAll('testNumber', null, number);
+	this.checkBars();
+};
+
+MathBars.prototype.checkBars = function(){
+	if (this.checkAll('killed', true)){
+		this.callAll('updateNumber');
+	}
+};
+
+"use strict";
+
+function MathBar(game, x, y, graphics, color) {
 	Phaser.Sprite.call(this, game, x, y, 'bar');
 
 	this.game = game;
@@ -9,23 +45,16 @@ function MathBar(game, x, y, width, height, graphics, color) {
     this.immovable = true;
 	this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	
-	this.x = x;
-	this.y = y;
-	this.width = width;
-	this.height = height;
-	
 	this.number = 0;
 
 	this.text = [];
-	this.textX = this.x + width / 2;
+	this.textX = x + this.width / 2;
 	this.textY = [this.height / 5, 4 * this.height / 5];
 	
 	this.graphics = graphics;
 	this.color = color;
 
 	this.killed = false;
-
-
 }
 
 MathBar.prototype = Object.create(Phaser.Sprite.prototype);
