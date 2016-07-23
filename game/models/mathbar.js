@@ -32,7 +32,7 @@ MathBars.prototype.testNumber = function(number, bombs){
 
 // Checks if the bars are all hit, if that's the case, refresh their numbers
 MathBars.prototype.checkBars = function(){
-	if (this.checkAll('killed', true)){
+	if (this.checkAll('hit', true)){
 		this.callAll('updateNumber');
 	}
 };
@@ -86,7 +86,7 @@ MathBar.prototype.load = function() {
 }
 
 MathBar.prototype.changeNumber = function(min, max){
-	this.number = Math.floor(Math.random() * (max - min + 1)) + min; //A whole number in the range (min, max)
+	this.number = this.game.rnd.between(min, max);//Math.floor(Math.random() * (max - min + 1)) + min; //A whole number in the range (min, max)
 };
 
 // It changes the graphics and the number when a bar is hit

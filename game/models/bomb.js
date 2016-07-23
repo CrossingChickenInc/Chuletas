@@ -57,6 +57,7 @@ function Bomb(game, x, y) {
 	this.game = game;
 	this.game.add.existing(this);
 	this.immovable = true;
+	this.checkWorldBounds = true;
 	this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	this.number=0;
 
@@ -66,6 +67,5 @@ Bomb.prototype = Object.create(Phaser.Sprite.prototype);
 Bomb.prototype.constructor = Bomb;
 
 Bomb.prototype.createRandomNumber = function(min, max){
-	var randomNumber = this.game.rnd.realInRange(min,max);
-	this.number = Math.round(randomNumber);
+	this.number = this.game.rnd.between(min, max);;
 };
