@@ -1,6 +1,6 @@
 "use strict";
 
-function MathNumber(game, x, y, mathBars) {
+function MathNumber(game, x, y, mathBars, bombs) {
 	this.game = game;
 	this.x = x;
 	this.y = y;
@@ -20,6 +20,7 @@ function MathNumber(game, x, y, mathBars) {
 					Phaser.Keyboard.SIX, Phaser.Keyboard.SEVEN,
 					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE];
 	this.mathBars = mathBars;
+	this.bombs = bombs;
 	this.timer = this.game.time.create(false);
 	this.timer.loop(1000, this.resetNumber, this);
 
@@ -69,7 +70,7 @@ MathNumber.prototype.handleInput = function(){
 };
 
 MathNumber.prototype.testNumber = function(){
-	this.mathBars.testNumber(this.number);
+	this.mathBars.testNumber(this.number, this.bombs);
 	this.resetNumber();
 };
 

@@ -23,8 +23,8 @@ MathBars.prototype.createBars = function(){
 	this.game.world.moveUp(this);
 };
 
-MathBars.prototype.testNumber = function(number){
-	this.callAll('testNumber', null, number);
+MathBars.prototype.testNumber = function(number, bombs){
+	this.callAll('testNumber', null, number, bombs);
 	this.checkBars();
 };
 
@@ -93,32 +93,33 @@ MathBar.prototype.killBar = function(){
 	for (var i = 0; i< 2; i++){
 		this.text[i].setText("0");
 	}
-	this.killed = true;
+	this.number = 0;
 };
 
-MathBar.prototype.testNumber = function(number/*,bombGroup*/){
+MathBar.prototype.testNumber = function(number, bombs){
 	// Function to catch all the overlaping bombs here
-	//this.game.physics.arcade.overlap(this, bombGroup, testArithmetic, null, this);
-
-	if (!this.killed && this.number == number){
-		this.killBar();
+	if (this.number != 0){
+		this.game.physics.arcade.overlap(this, bombs, testArithmetic, null, this);		
+		if (this.killed){
+			this.killBar();
+		}	
 	}
-};
 
-MathBar.prototype.testArithmetic = function(bar, bomb){
-	var calculedNumber;
-	var option = 0;
-	switch (option){
-		case 0:
-			calculedNumber = bomb.number + bar.number;
-		break;
-		case 1:
-			calculedNumber = bomb.number * bar.number;
-		break;
-	}
-	if (calculedNumber == number){
-		bomb.kill();
-		bar.killBar();
+	function testArithmetic(bar, bomb) {
+		var calculedNumber;
+		var option = 0;
+		switch (option){
+			case 0:
+				calculedNumber = bomb.number + bar.number;
+			break;
+			case 1:
+				calculedNumber = bomb.number * bar.number;
+			break;
+		}
+		if (calculedNumber == number){
+			bomb.kill();
+			bar.killed = true;
+		}
 	}
 };
 

@@ -20,12 +20,14 @@ States.MathBombs = {
 			this.mathBars.add(mathbar);
 		}*/
 
-		this.mathNumber = new MathNumber(this.game, 50, this.game.height, this.mathBars);
+
+		this.bombs = new Bombs(this.game);
+		this.bombs.createBomb();
+
+		this.mathNumber = new MathNumber(this.game, 50, this.game.height, this.mathBars, this.bombs);
 		this.mathNumber.load();
 
 		//Creates and loads Bomb object
-		this.bomb = new Bombs(this.game);
-		this.bomb.createBomb();
   		//this.bombs.add(bomb);
 
 		/*//Creates and loads Bomb object
@@ -42,7 +44,7 @@ States.MathBombs = {
 		this.mathNumber.update();
 		//Timer to create bombs
 		if(this.clock.total == 2){
-			this.bomb.createBomb();
+			this.bombs.createBomb();
 			this.clock.total = 0;
 		}
 	}	
