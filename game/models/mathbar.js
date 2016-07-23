@@ -1,18 +1,54 @@
 "use strict";
 
-function MathBar(game, x, y, width, height, graphics, color) {
+function MathBars(game) {
+	Phaser.Group.call(this, game);
+
 	this.game = game;
-	
-	this.sprite = null;
-	this.x = x;
-	this.y = y;
-	this.width = width;
-	this.height = height;
+}
+
+MathBars.prototype = Object.create(Phaser.Group.prototype);
+MathBars.prototype.constructor = MathBars;
+
+MathBars.prototype.createBars = function(){
+	var graphics = this.game.add.graphics(0, 0);
+	var width = this.game.width / (2 * this.game.nBars);
+	var colors = [0x0A9CD8, 0xFAE927, 0x2AEDA1, 0x7109DA];
+
+	for (var i=0; i < this.game.nBars; i++){
+		var mathbar = new MathBar(this.game, this.game.width/2 + i*width, 0, graphics, colors[i]);
+		mathbar.load();
+		this.add(mathbar);
+	}
+
+	this.game.world.moveUp(this);
+};
+
+MathBars.prototype.testNumber = function(number){
+	this.callAll('testNumber', null, number);
+	this.checkBars();
+};
+
+MathBars.prototype.checkBars = function(){
+	if (this.checkAll('killed', true)){
+		this.callAll('updateNumber');
+	}
+};
+
+"use strict";
+
+function MathBar(game, x, y, graphics, color) {
+	Phaser.Sprite.call(this, game, x, y, 'bar');
+
+	this.game = game;
+    this.game.add.existing(this);
+
+    this.immovable = true;
+	this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	
 	this.number = 0;
 
 	this.text = [];
-	this.textX = this.x + width / 2;
+	this.textX = x + this.width / 2;
 	this.textY = [this.height / 5, 4 * this.height / 5];
 	
 	this.graphics = graphics;
@@ -21,15 +57,13 @@ function MathBar(game, x, y, width, height, graphics, color) {
 	this.killed = false;
 }
 
+MathBar.prototype = Object.create(Phaser.Sprite.prototype);
+MathBar.prototype.constructor = MathBar;
+
 MathBar.prototype.render = function() {
-	this.sprite = this.game.add.sprite(this.x, this.y, 'bar');
 	this.graphics.beginFill(this.color);
     this.graphics.drawRect(this.x, this.y, this.width, this.height);
 	this.graphics.endFill();
-
-	this.sprite.immovable = true; // makes it immovable when a collision occurs
-	
-	this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);	
 };
 
 MathBar.prototype.renderText = function() {
@@ -62,9 +96,29 @@ MathBar.prototype.killBar = function(){
 	this.killed = true;
 };
 
-MathBar.prototype.dropNumber = function(number){
+MathBar.prototype.testNumber = function(number/*,bombGroup*/){
+	// Function to catch all the overlaping bombs here
+	//this.game.physics.arcade.overlap(this, bombGroup, testArithmetic, null, this);
+
 	if (!this.killed && this.number == number){
 		this.killBar();
+	}
+};
+
+MathBar.prototype.testArithmetic = function(bar, bomb){
+	var calculedNumber;
+	var option = 0;
+	switch (option){
+		case 0:
+			calculedNumber = bomb.number + bar.number;
+		break;
+		case 1:
+			calculedNumber = bomb.number * bar.number;
+		break;
+	}
+	if (calculedNumber == number){
+		bomb.kill();
+		bar.killBar();
 	}
 };
 
@@ -80,3 +134,4 @@ MathBar.prototype.updateNumber = function(number){
 		this.text[i].y = this.textY[i] - this.text[i].height / 2; 
 	}
 };
+

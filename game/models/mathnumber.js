@@ -20,6 +20,8 @@ function MathNumber(game, x, y, mathBars) {
 					Phaser.Keyboard.SIX, Phaser.Keyboard.SEVEN,
 					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE];
 	this.mathBars = mathBars;
+	this.timer = this.game.time.create(false);
+	this.timer.loop(1000, this.resetNumber, this);
 
 }
 
@@ -35,6 +37,7 @@ MathNumber.prototype.load = function() {
 }
 
 MathNumber.prototype.changeNumber = function(number){
+	this.timer.stop(false);
 	if (!this.pressed[number]){
 		this.number = (this.number * 10 + number)%1000;
 		this.text.setText(this.number.toString());
@@ -49,7 +52,7 @@ MathNumber.prototype.update = function(){
 
 MathNumber.prototype.handleInput = function(){
 	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-		this.submitNumber();
+		this.testNumber();
 	} else if (game.input.keyboard.isDown(Phaser.Keyboard.BACKSPACE) || game.input.keyboard.isDown(Phaser.Keyboard.DELETE)) {
 		this.resetNumber();
 	} else {
@@ -58,18 +61,16 @@ MathNumber.prototype.handleInput = function(){
 				this.changeNumber(i);
 			} else {
 				this.pressed[i] = false;
+				this.timer.start();
+			}
 		}
-	}
 	}
 	
 };
 
-MathNumber.prototype.submitNumber = function(){
-	for (var i=0; i<this.mathBars.length; i++){
-		this.mathBars[i].dropNumber(this.number);
-	}
+MathNumber.prototype.testNumber = function(){
+	this.mathBars.testNumber(this.number);
 	this.resetNumber();
-	this.checkBars();
 };
 
 MathNumber.prototype.resetNumber = function(){
@@ -78,16 +79,3 @@ MathNumber.prototype.resetNumber = function(){
 	this.text.x = this.x - this.text.width;
 };
 
-MathNumber.prototype.checkBars = function(){
-	var allKilled = true;
-	for (var i=0; i<this.mathBars.length; i++){
-		if (!this.mathBars[i].killed){
-			allKilled = false;
-		}
-	}
-	if (allKilled){
-		for (var i=0; i<this.mathBars.length; i++){
-			this.mathBars[i].updateNumber();
-		}
-	}
-};
