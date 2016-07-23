@@ -2,30 +2,34 @@
 
 function MathNumber(game, x, y, mathBars, bombs) {
 	this.game = game;
+
 	this.x = x;
 	this.y = y;
 	
 	this.number = 0;
 
 	this.text = null;
-	this.pressed = [];
+	this.pressed = []; //To check if a number is already pressed
 	this.numpad = [Phaser.Keyboard.NUMPAD_0, Phaser.Keyboard.NUMPAD_1,
 					Phaser.Keyboard.NUMPAD_2, Phaser.Keyboard.NUMPAD_3,
 					Phaser.Keyboard.NUMPAD_4, Phaser.Keyboard.NUMPAD_5,
 					Phaser.Keyboard.NUMPAD_6, Phaser.Keyboard.NUMPAD_7,
-					Phaser.Keyboard.NUMPAD_8, Phaser.Keyboard.NUMPAD_9];
+					Phaser.Keyboard.NUMPAD_8, Phaser.Keyboard.NUMPAD_9]; //Al the Phaser.Keyboard keys for the numpad
 	this.numbers = [Phaser.Keyboard.ZERO, Phaser.Keyboard.ONE,
 					Phaser.Keyboard.TWO, Phaser.Keyboard.THREE,
 					Phaser.Keyboard.FOUR, Phaser.Keyboard.FIVE,
 					Phaser.Keyboard.SIX, Phaser.Keyboard.SEVEN,
-					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE];
-	this.mathBars = mathBars;
-	this.bombs = bombs;
+					Phaser.Keyboard.EIGHT, Phaser.Keyboard.NINE]; //Al the Phaser.Keyboard keys for the numbers
+
+	this.mathBars = mathBars; // The mathbars group
+	this.bombs = bombs; // The bombs group
+
 	this.timer = this.game.time.create(false);
-	this.timer.loop(1000, this.resetNumber, this);
+	this.timer.loop(1000, this.resetNumber, this); // Used to reset the number to 0 if no key is pressed after 1 second
 
 }
 
+//Shows the number on screen (It won't be used in the final build)
 MathNumber.prototype.renderText = function() {
 	this.text = game.add.text(this.x, this.y, this.number.toString());
 	this.text.x = this.x - this.text.width;
@@ -37,6 +41,7 @@ MathNumber.prototype.load = function() {
 	this.renderText();
 }
 
+// When a key is pressed (numbers or numpad), it changes the actual number
 MathNumber.prototype.changeNumber = function(number){
 	this.timer.stop(false);
 	if (!this.pressed[number]){
@@ -51,6 +56,7 @@ MathNumber.prototype.update = function(){
 	this.handleInput();
 };
 
+// Checks if any key (numbers or numpad) is pressed to change the number, if Enter is pressed to use it in the bars or if Delete (Backspace not ready yet) is pressed to delete the number
 MathNumber.prototype.handleInput = function(){
 	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
 		this.testNumber();
@@ -69,14 +75,16 @@ MathNumber.prototype.handleInput = function(){
 	
 };
 
+// Calls the testNumber function on the mathbars group
 MathNumber.prototype.testNumber = function(){
 	this.mathBars.testNumber(this.number, this.bombs);
 	this.resetNumber();
 };
 
+// Resets the actual number to 0
 MathNumber.prototype.resetNumber = function(){
 	this.number = 0;
-	this.text.setText(this.number.toString());
-	this.text.x = this.x - this.text.width;
+	this.text.setText(this.number.toString()); //This won't be used in the final build
+	this.text.x = this.x - this.text.width; //This won't be used in the final build
 };
 
