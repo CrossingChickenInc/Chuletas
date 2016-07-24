@@ -25,7 +25,7 @@ States.Play = {
 		this.game.camera.follow(this.game.player.colliderSprite);
 
 		game.portals = [];
-		game.portals.push(new Portal(window.game, 200, 180, 'Play'));
+		game.portals.push(new Portal(window.game, 200, 180, 'ReticleState'));
 		game.portals.push(new Portal(window.game, 300, 180, 'Play'));
 		game.portals.push(new Portal(window.game, 400, 180, 'Play'));
 		
