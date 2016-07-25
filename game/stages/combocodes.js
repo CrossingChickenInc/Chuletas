@@ -34,13 +34,21 @@ ComboCodes.prototype.update = function(){
 
 	this.game.Key.update();
 	this.game.clock.load();
-	if (this.game.clock.total == 200) 
-	{
-		this.game.clock.total = 0 ;
-		this.game.Key.kill();
-		this.game.Key = new Key(window.game);
-		this.game.Key.render();
 
+	if(this.game.Key.hold == true)
+	{
+		if (this.game.clock.total == 200) 
+		{
+			this.game.clock.total = 0 ;
+			this.game.Key.kill();
+			this.game.Key = new Key(window.game);
+			this.game.Key.render();
+
+		}
+	}
+	else 
+	{
+		this.game.clock.total = 0;
 	}
 	//creates a timer for when a single key is pressed
 	/*if(//key pressed
