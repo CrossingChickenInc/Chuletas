@@ -42,6 +42,7 @@ Key.prototype.render = function(){
 // Updates the Key.
 Key.prototype.update = function(){
 	//this.setBodyPosition(this.colliderSprite.x - this.positionData.colliderDifference.x, this.colliderSprite.y - this.positionData.colliderDifference.x);
+	//this.render();
 	this.createEventListeners();
 }
 	
