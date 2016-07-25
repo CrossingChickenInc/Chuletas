@@ -22,7 +22,7 @@ ComboCodes.prototype.create = function() {
 	this.game.Key.render();
 
 	//Creates and loads Clock object
-	game.clock = new Clock(window.game);
+	//game.clock = new Clock(window.game);
 }	
 
 /**
