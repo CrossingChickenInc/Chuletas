@@ -90,16 +90,14 @@ Key.prototype.createEventListeners = function() {
         if(i == this.keyNumber && keys['key' + i].isDown)
         {
         	this.hold = true;
-        	this.game.add.text(10, 10, "INPUT VERIFICATION "+ this.hold +" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
+        	//this.game.add.text(10, 10, "INPUT VERIFICATION "+ this.hold +" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
         	break;
         }
        	
-       /* else
+        else
         {
         	this.hold = false;
-        	this.game.add.text(10, 500, "INPUT VERIFICATION "+ this.hold +" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
-        	
-        }*/
+        }
     }
 }
 
