@@ -88,7 +88,7 @@ Key.prototype.createEventListeners = function() {
 
         if(i == this.keyNumber && keys['key' + i].isDown)
         {
-        	this.game.add.text(10, 10, "INPUT VERIFICATION " + this.probador+" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
+        	this.game.add.text(10, 10, "INPUT VERIFICATION " +" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
         	this.hold = true;
         }
         else
