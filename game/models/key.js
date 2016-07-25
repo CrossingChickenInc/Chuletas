@@ -7,7 +7,6 @@ function Key(game){
 	this.x = game.rnd.between(0, 750);
     this.y = game.rnd.between(0, 550);
     this.keyNumber = game.rnd.between(0,25);
-    this.probador = 0;
     this.hold = false;
 	this.enableBody = true;
 	this.positionData = {
@@ -89,7 +88,6 @@ Key.prototype.createEventListeners = function() {
 
         if(i == this.keyNumber && keys['key' + i].isDown)
         {
-        	//this.probador += 1;
         	this.game.add.text(10, 10, "INPUT VERIFICATION " + this.probador+" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
         	this.hold = true;
         }
@@ -98,5 +96,9 @@ Key.prototype.createEventListeners = function() {
         	this.hold = false;
         }
     }
+}
+
+Key.prototype.kill = function(){
+	this.sprite.kill();
 }
 
