@@ -11,7 +11,7 @@ Clock.prototype.render = function(){
     this.timer = game.time.create(false);
 
     //  Set a TimerEvent to occur after a second
-    this.timer.loop(500, this.updateCounter, this);
+  //  this.timer.loop(500, this.updateCounter, this); // commented -- Ioto
 
     //  Start the timer running - this is important!
     //  It won't start automatically, allowing you to hook it to button events and the like.

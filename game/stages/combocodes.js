@@ -22,7 +22,8 @@ ComboCodes.prototype.create = function() {
 	this.game.Key.render();
 
 	//Creates and loads Clock object
-	//game.clock = new Clock(window.game);
+	this.game.clock = new Clock(window.game);
+	
 }	
 
 /**
@@ -30,9 +31,15 @@ ComboCodes.prototype.create = function() {
  */
 ComboCodes.prototype.update = function(){
 
-	//this.game.Key.update();
+	this.game.Key.update();
+	this.game.clock.load();
+	if (this.game.clock.total == 500) 
+	{
+		this.game.clock.total = 0 ;
+		this.game.Key.kill();
+	}
 	//creates a timer for when a single key is pressed
-	if(//key pressed
+	/*if(//key pressed
 	){
 		game.clock.load();
 	}
@@ -56,8 +63,10 @@ ComboCodes.prototype.update = function(){
 	if(keyCreated) {
 		this.game.Key.update();
 		keyCreated = false;
-	}
+	}*/
 }
+
+
 
 // Adds this stage to the game's states.
 States.ComboCodes = new ComboCodes();

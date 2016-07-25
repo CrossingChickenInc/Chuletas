@@ -7,6 +7,8 @@ function Key(game){
 	this.x = game.rnd.between(0, 750);
     this.y = game.rnd.between(0, 550);
     this.keyNumber = game.rnd.between(0,25);
+    this.probador = 0;
+    this.hold = false;
 	this.enableBody = true;
 	this.positionData = {
 	colliderDifference: {x: 4, y: 3}, // distance from collider sprite to sprite
@@ -34,13 +36,14 @@ Key.prototype.render = function(){
 	//adding the random letter
 	this.game.add.text(this.x + 45, this.y + 15, this.pmap[this.keyNumber], { font: "50px Courier", fill: "#000", tabs: 32 });
 
-	this.createEventListeners();
+	
 };
 
 
 // Updates the Key.
 Key.prototype.update = function(){
 	//this.setBodyPosition(this.colliderSprite.x - this.positionData.colliderDifference.x, this.colliderSprite.y - this.positionData.colliderDifference.x);
+	this.createEventListeners();
 }
 	
 	
@@ -79,31 +82,21 @@ Key.prototype.createEventListeners = function() {
         }
     );
 
+    
     for (var i = 0; i < 26; i++)
     {
-        keys['key' + i].onDown.add(keyDown,this, 0,i);
+       // keys['key' + i].onDown.add(keyDown,this, 0,i);
+
+        if(i == this.keyNumber && keys['key' + i].isDown)
+        {
+        	//this.probador += 1;
+        	this.game.add.text(10, 10, "INPUT VERIFICATION " + this.probador+" === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
+        	this.hold = true;
+        }
+        else
+        {
+        	this.hold = false;
+        }
     }
 }
-
-//
-function keyDown(n,p) {
-
-    /*if (typeof p !== 'undefined')
-    {
-        //  It came from a Keyboard Event, in which case index is in p, not i.
-        n = p;
-    }*/
-
-    if (p == this.keyNumber)
-    {
-    	this.game.add.text(10, 10, "INPUT VERIFICATION" + " === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
-	}
-	else 
-	{
-		this.game.add.text(10, 500, "INPUT ERROR: " + p + " === KeyNumber: " + this.keyNumber, { font: "30px Courier", fill: "#FFD700", tabs: 32 });
-	}
-}
-
-
-
 
